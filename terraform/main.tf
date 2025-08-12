@@ -15,16 +15,19 @@ provider "aws" {
 module "s3" {
   source = "./modules/s3"
   env    = var.env
+  aws_region = var.aws_region
 }
 
 module "redshift" {
   source      = "./modules/redshift"
   env         = var.env
-  bucket_name = module.s3.bucket_name
+  bucket_arn  = module.s3.bucket_arn
   redshift_username = var.redshift_username
   redshift_password = var.redshift_password
   security_group_id = module.vpc.security_group_id
   subnet_ids       = module.vpc.subnet_ids
+  redshift_depends_on = [module.vpc]
+  redshift_integration_depends_on = [module.s3]
 }
 
 module "vpc" {

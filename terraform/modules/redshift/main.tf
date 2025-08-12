@@ -1,4 +1,8 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_redshiftserverless_namespace" "dbt-redshift-ssm-demo" {
+  depends_on = [ var.redshift_depends_on ]
+
   namespace_name = "dbt-redshift-ssm-demo-${var.env}"
   db_name = "ecommerce"
   admin_username = var.redshift_username
@@ -11,7 +15,7 @@ resource "aws_redshiftserverless_namespace" "dbt-redshift-ssm-demo" {
   }
 }
 
-resource "aws_redshiftserverless_workgroup" "serverless" {
+resource "aws_redshiftserverless_workgroup" "dbt-redshift-ssm-demo" {
   depends_on = [aws_redshiftserverless_namespace.dbt-redshift-ssm-demo]
 
   namespace_name = aws_redshiftserverless_namespace.dbt-redshift-ssm-demo.id
@@ -26,6 +30,60 @@ resource "aws_redshiftserverless_workgroup" "serverless" {
     Name        = "dbt-redshift-ssm-demo-${var.env}"
     Environment = var.env
   }
+}
+
+resource "aws_redshift_resource_policy" "redshift_serverless_s3_event" {
+  resource_arn = aws_redshiftserverless_namespace.dbt-redshift-ssm-demo.arn
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "redshift.amazonaws.com"
+        },
+        Action = "redshift:AuthorizeInboundIntegration",
+        Resource = aws_redshiftserverless_namespace.dbt-redshift-ssm-demo.arn,
+        Condition = {
+          StringEquals = {
+            "aws:SourceArn" = var.bucket_arn
+          }
+        }
+      },
+      {
+        Effect = "Allow",
+        Principal = {
+          AWS = data.aws_caller_identity.current.arn
+        },
+        Action = "redshift:CreateInboundIntegration",
+        Resource = aws_redshiftserverless_namespace.dbt-redshift-ssm-demo.arn,
+        Condition = {
+          StringEquals = {
+            "aws:SourceArn" = var.bucket_arn
+          }
+        }
+      }
+    ]
+  })
+
+  depends_on = [
+    aws_redshiftserverless_workgroup.dbt-redshift-ssm-demo
+  ]
+}
+
+resource "aws_redshift_integration" "s3_integration" {
+  integration_name = "dbt-redshift-ssm-demo-${var.env}-s3-integration"
+  source_arn = var.bucket_arn
+  target_arn = aws_redshiftserverless_namespace.dbt-redshift-ssm-demo.arn
+  tags = {
+    Name        = "dbt-redshift-ssm-demo-${var.env}-s3-integration"
+    Environment = var.env
+  }
+
+  depends_on = [
+    aws_redshift_resource_policy.redshift_serverless_s3_event,
+    var.redshift_integration_depends_on
+  ]
 }
 
 variable "env" {
@@ -52,4 +110,19 @@ variable "security_group_id" {
 variable "subnet_ids" {
     description = "List of subnet IDs for Redshift"
     type        = list(string)
+}
+
+variable "bucket_arn" {
+  description = "S3 bucket ARN used by Redshift"
+  type        = string
+}
+
+variable "redshift_depends_on" {
+  description = "Redshift dependencies"
+  type        = any
+}
+
+variable "redshift_integration_depends_on" {
+  description = "Redshift integration dependencies"
+  type        = any
 }
