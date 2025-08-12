@@ -126,3 +126,7 @@ variable "redshift_integration_depends_on" {
   description = "Redshift integration dependencies"
   type        = any
 }
+
+output "aws_redshiftserverless_workgroup_arn" {
+  value = aws_redshiftserverless_workgroup.dbt-redshift-ssm-demo.arn
+}

@@ -48,3 +48,7 @@ resource "aws_iam_role_policy" "redshift_s3_policy" {
     ]
   })
 }
+
+output "redshift_role_arn" {
+  value = aws_iam_role.redshift_role.arn
+}

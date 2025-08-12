@@ -18,6 +18,11 @@ module "s3" {
   aws_region = var.aws_region
 }
 
+module "vpc" {
+  source = "./modules/vpc"
+  env    = var.env
+}
+
 module "redshift" {
   source      = "./modules/redshift"
   env         = var.env
@@ -28,9 +33,4 @@ module "redshift" {
   subnet_ids       = module.vpc.subnet_ids
   redshift_depends_on = [module.vpc]
   redshift_integration_depends_on = [module.s3]
-}
-
-module "vpc" {
-  source = "./modules/vpc"
-  env    = var.env
 }
