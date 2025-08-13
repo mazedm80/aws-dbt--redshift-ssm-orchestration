@@ -64,3 +64,15 @@ variable "env" {
     description = "Deployment environment"
     type = string
 }
+
+output "subnet_ids" {
+  value = [
+    aws_subnet.dbt-redshift-ssm-demo-subnet-az1.id,
+    aws_subnet.dbt-redshift-ssm-demo-subnet-az2.id,
+    aws_subnet.dbt-redshift-ssm-demo-subnet-az3.id
+  ]
+}
+
+output "security_group_id" {
+  value = aws_security_group.dbt-redshift-ssm-demo-sg.id  
+}
