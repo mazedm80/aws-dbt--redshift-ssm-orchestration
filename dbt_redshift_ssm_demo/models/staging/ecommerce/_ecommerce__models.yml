@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: stg_ecommerce__customers
+    description: Staging table view for e-commerce customers
+  
+  - name: stg_ecommerce__geolocation
+    description: Staging table view for e-commerce geolocation
+  
+  - name: stg_ecommerce__order_items
+    description: Staging table view for e-commerce order items
+
+  - name: stg_ecommerce__order_payments
+    description: Staging table view for e-commerce order payments
+
+  - name: stg_ecommerce__order_reviews
+    description: Staging table view for e-commerce order reviews
+
+  - name: stg_ecommerce__order
+    description: Staging table view for e-commerce orders
+  
+  - name: stg_ecommerce__product_category_name_translation
+    description: Staging table view for e-commerce product category name translations
+  
+  - name: stg_ecommerce__products
+    description: Staging table view for e-commerce products
+
+  - name: stg_ecommerce__sellers
+    description: Staging table view for e-commerce sellers

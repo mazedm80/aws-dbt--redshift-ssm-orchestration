@@ -1,0 +1,15 @@
+snapshots:
+  - name: snap_customers
+    relation: ref('stg_ecommerce__customers')
+    description: "Snapshot from customers staging table"
+    config:
+      database: ecommerce
+      schema: snapshots
+      strategy: check
+      unique_key: customer_id
+      check_cols:
+        - customer_unique_id
+        - customer_zip_code_prefix
+        - customer_city
+        - customer_state
+      hard_deletes: invalidate

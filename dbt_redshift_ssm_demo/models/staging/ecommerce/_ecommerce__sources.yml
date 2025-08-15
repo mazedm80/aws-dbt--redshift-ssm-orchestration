@@ -1,0 +1,87 @@
+version: 2
+
+sources:
+  - name: ecommerce
+    description: Sample Ecommerce database to test dbt functions.
+    schema: public
+    tables:
+      - name: customers
+        description: Customers table
+        columns:
+          - name: customer_id
+            data_tests:
+              - unique
+              - not_null
+      
+      - name: geolocation
+        description: Geolocation table
+        columns:
+          - name: geolocation_zip_code_prefix
+            data_tests:
+              - unique
+              - not_null
+
+      - name: products
+        description: Products table
+        columns:
+          - name: product_id
+            data_tests:
+              - unique
+              - not_null
+      
+      - name: product_category_name_translation
+        description: Product Category Name Translation table
+        columns:
+          - name: product_category_name
+            data_tests:
+              - unique
+              - not_null
+      
+      - name: sellers
+        description: Sellers table
+        columns:
+          - name: seller_id
+            data_tests:
+              - unique
+              - not_null
+      
+      - name: orders
+        description: Order table
+        columns:
+          - name: order_id
+            data_tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: ref('customers')
+                  field: customer_id
+
+      - name: order_items
+        description: Order items table
+        columns:
+          - name: order_id
+            data_tests:
+              - not_null
+              - relationships:
+                  to: ref('orders')
+                  field: order_id
+      
+      - name: order_payments
+        description: Order Payments table
+        columns:
+          - name: order_id
+            data_tests:
+              - not_null
+              - relationships:
+                  to: ref('orders')
+                  field: order_id
+
+      - name: order_reviews
+        description: Order Reviews table
+        columns:
+          - name: order_id
+            data_tests:
+              - not_null
+              - relationships:
+                  to: ref('orders')
+                  field: order_id
