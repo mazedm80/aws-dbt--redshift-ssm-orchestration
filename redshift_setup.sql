@@ -1,13 +1,3 @@
--- Create a user for dbt
-CREATE USER dbt_user PASSWORD 'sha256|Dbt12345';
--- Create schemas for dbt
-CREATE SCHEMA IF NOT EXISTS staging AUTHORIZATION dbt_user;
-CREATE SCHEMA IF NOT EXISTS warehouse AUTHORIZATION dbt_user;
--- Grant necessary permissions to the dbt user
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO dbt_user;
-GRANT USAGE ON SCHEMA staging TO dbt_user;
-GRANT USAGE ON SCHEMA warehouse TO dbt_user;
-
 -- Create customer table
 CREATE TABLE IF NOT EXISTS public.customers 
 (
@@ -22,7 +12,7 @@ DISTSTYLE KEY
 DISTKEY (customer_id);
 -- Create the customer COPY JOB
 COPY public.customers
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/customers.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/customers.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -46,7 +36,7 @@ DISTSTYLE KEY
 DISTKEY (geolocation_zip_code_prefix);
 -- Create the geolocation COPY JOB
 COPY public.geolocation
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/geolocation.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/geolocation.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -74,7 +64,7 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the orders COPY JOB
 COPY public.orders
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/orders.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/orders.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -89,7 +79,7 @@ CREATE TABLE IF NOT EXISTS public.order_payments
 (
     order_id VARCHAR(256) NOT NULL,
     payment_sequential BIGINT,
-    payment_type VARCHAR(256) COLLATE pg_catalog."default",
+    payment_type VARCHAR(256),
     payment_installments BIGINT,
     payment_value REAL,
     FOREIGN KEY (order_id) REFERENCES public.orders (order_id)
@@ -98,7 +88,7 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the order_payments COPY JOB
 COPY public.order_payments
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/order_payments.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/order_payments.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -125,7 +115,7 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the order_reviews COPY JOB
 COPY public.order_reviews
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/order_reviews.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/order_reviews.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -146,7 +136,7 @@ DISTSTYLE KEY
 DISTKEY (product_category_name);
 -- Create the product_category_name_translation COPY JOB
 COPY public.product_category_name_translation
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/product_category_name_translation.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/product_category_name_translation.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -175,7 +165,7 @@ DISTSTYLE KEY
 DISTKEY (product_id);
 -- Create the products COPY JOB
 COPY public.products
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/products.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/products.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -198,7 +188,7 @@ DISTSTYLE KEY
 DISTKEY (seller_id);
 -- Create the sellers COPY JOB
 COPY public.sellers
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/sellers.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/sellers.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
@@ -227,7 +217,7 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the order_items COPY JOB
 COPY public.order_items
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-8cd4154f/data/order_items.csv'
+FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/order_items.csv'
 region 'eu-central-1'
 IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
