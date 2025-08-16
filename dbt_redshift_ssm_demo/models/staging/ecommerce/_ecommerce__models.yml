@@ -16,7 +16,7 @@ models:
   - name: stg_ecommerce__order_reviews
     description: Staging table view for e-commerce order reviews
 
-  - name: stg_ecommerce__order
+  - name: stg_ecommerce__orders
     description: Staging table view for e-commerce orders
   
   - name: stg_ecommerce__product_category_name_translation

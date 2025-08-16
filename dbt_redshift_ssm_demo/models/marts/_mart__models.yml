@@ -4,41 +4,41 @@ models:
   - name: dim_customers
     description: "Dimension table for customers"
     config:
-      materialized: materialized_view
+      materialized: table
       dist: customer_key
       sort: [customer_key, customer_city, customer_state]
 
   - name: dim_products
     description: "Dimension table for products"
     config:
-      materialized: materialized_view
+      materialized: table
       dist: product_key
       sort: [product_key, product_category_name]
 
   - name: dim_date
     description: "Dimension table for dates"
     config:
-      materialized: materialized_view
+      materialized: table
       dist: date_key
       sort: [date_key]
 
   - name: dim_sellers
     description: "Dimension table for sellers"
     config:
-      materialized: materialized_view
+      materialized: table
       dist: seller_key
       sort: [seller_key, seller_city, seller_state]
   
   - name: fct_order_items
     description: "Fact table for order items"
     config:
-      materialized: materialized_view
+      materialized: table
       dist: order_item_key
       sort: [order_item_key, order_date_key]
 
   - name: fct_daily_order_summary
     description: "Fact table for daily order summaries"
     config:
-      materialized: materialized_view
+      materialized: table
       dist: date_key
       sort: [date_key]
