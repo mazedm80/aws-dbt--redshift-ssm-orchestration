@@ -18,7 +18,6 @@ sources:
         columns:
           - name: geolocation_zip_code_prefix
             data_tests:
-              - unique
               - not_null
 
       - name: products

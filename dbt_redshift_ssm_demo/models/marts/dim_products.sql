@@ -3,7 +3,7 @@ WITH products AS (
 ),
 
 categories AS (
-    SELECT * FROM {{ ref('stg_product_category_name_translation') }}
+    SELECT * FROM {{ ref('stg_ecommerce__product_category_name_translation') }}
 ),
 
 product_dimension AS (
