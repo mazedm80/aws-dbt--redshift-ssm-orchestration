@@ -118,7 +118,6 @@ resource "aws_iam_role_policy" "ec2_instance_policy" {
         Condition = {
             StringLike = {
             "s3:prefix" = [
-                "logs/*",
                 "tools/*"
             ]
             }
@@ -131,7 +130,6 @@ resource "aws_iam_role_policy" "ec2_instance_policy" {
             "s3:PutObject"
         ],
         Resource = [
-            "${var.bucket_arn}/logs/*",
             "${var.bucket_arn}/tools/*"
         ]
         }
