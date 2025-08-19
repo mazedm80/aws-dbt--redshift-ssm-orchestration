@@ -1,5 +1,5 @@
 data "aws_caller_identity" "current" {}
-
+# Create an S3 bucket for Redshift Serverless integration with SSM
 resource "aws_s3_bucket" "dbt-redshift-ssm-demo" {
     bucket = "dbt-redshift-ssm-demo-${var.env}-bucket-${random_id.suffix.hex}"
     tags = {
@@ -12,7 +12,7 @@ resource "aws_s3_bucket" "dbt-redshift-ssm-demo" {
 resource "random_id" "suffix" {
     byte_length = 4
 }
-
+# Create S3 bucket policy for Redshift integration
 resource "aws_s3_bucket_policy" "redshift_integration_policy" {
   bucket = aws_s3_bucket.dbt-redshift-ssm-demo.id
 

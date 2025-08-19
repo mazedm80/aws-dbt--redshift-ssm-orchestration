@@ -1,5 +1,5 @@
 data "aws_caller_identity" "current" {}
-
+# Create Redshift Serverless Namespace
 resource "aws_redshiftserverless_namespace" "dbt-redshift-ssm-demo" {
   depends_on = [ var.redshift_depends_on ]
 
@@ -14,7 +14,7 @@ resource "aws_redshiftserverless_namespace" "dbt-redshift-ssm-demo" {
     Environment = var.env
   }
 }
-
+# Create Redshift Serverless Workgroup
 resource "aws_redshiftserverless_workgroup" "dbt-redshift-ssm-demo" {
   depends_on = [aws_redshiftserverless_namespace.dbt-redshift-ssm-demo]
 
@@ -31,7 +31,7 @@ resource "aws_redshiftserverless_workgroup" "dbt-redshift-ssm-demo" {
     Environment = var.env
   }
 }
-
+# Create Redshift Event Integration Resource Policy
 resource "aws_redshift_resource_policy" "redshift_serverless_s3_event" {
   resource_arn = aws_redshiftserverless_namespace.dbt-redshift-ssm-demo.arn
   policy = jsonencode({
@@ -70,7 +70,7 @@ resource "aws_redshift_resource_policy" "redshift_serverless_s3_event" {
     aws_redshiftserverless_workgroup.dbt-redshift-ssm-demo
   ]
 }
-
+# Create Redshift S3 Integration
 resource "aws_redshift_integration" "s3_integration" {
   integration_name = "dbt-redshift-ssm-demo-${var.env}-s3-integration"
   source_arn = var.bucket_arn
@@ -125,8 +125,4 @@ variable "redshift_depends_on" {
 variable "redshift_integration_depends_on" {
   description = "Redshift integration dependencies"
   type        = any
-}
-
-output "aws_redshiftserverless_workgroup_arn" {
-  value = aws_redshiftserverless_workgroup.dbt-redshift-ssm-demo.arn
 }

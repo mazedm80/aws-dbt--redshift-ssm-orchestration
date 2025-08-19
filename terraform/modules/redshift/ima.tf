@@ -29,17 +29,14 @@ resource "aws_iam_role_policy" "redshift_s3_policy" {
       {
         Effect = "Allow",
         Action = [
-          "s3:GetObject"
-        ],
-        Resource = "${var.bucket_arn}/data/*"
-      },
-      {
-        Effect = "Allow",
-        Action = [
+          "s3:GetObject",
           "s3:ListBucket"
         ],
-        Resource = "${var.bucket_arn}"
-        Condition = {
+        Resource = [
+          "${var.bucket_arn}",
+          "${var.bucket_arn}/data/*",
+          ],
+          Condition = {
           StringLike = {
             "s3:prefix" = "data/*"
           }

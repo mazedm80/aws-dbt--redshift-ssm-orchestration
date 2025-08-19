@@ -9,12 +9,12 @@ variable "env" {
 }
 
 variable "redshift_username" {
-    description = "Redshift admin username"
-    type        = string
+  description = "Redshift admin username"
+  type        = string
 }
 
 variable "redshift_password" {
-    description = "Redshift admin password"
-    type        = string
-    sensitive   = true
+  description = "Redshift admin password"
+  type        = string
+  sensitive   = true
 }
