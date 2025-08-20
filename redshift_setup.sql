@@ -12,9 +12,9 @@ DISTSTYLE KEY
 DISTKEY (customer_id);
 -- Create the customer COPY JOB
 COPY public.customers
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/customers.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/customers.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -36,9 +36,9 @@ DISTSTYLE KEY
 DISTKEY (geolocation_zip_code_prefix);
 -- Create the geolocation COPY JOB
 COPY public.geolocation
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/geolocation.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/geolocation.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -64,9 +64,9 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the orders COPY JOB
 COPY public.orders
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/orders.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/orders.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -88,9 +88,9 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the order_payments COPY JOB
 COPY public.order_payments
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/order_payments.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/order_payments.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -115,9 +115,9 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the order_reviews COPY JOB
 COPY public.order_reviews
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/order_reviews.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/order_reviews.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -136,9 +136,9 @@ DISTSTYLE KEY
 DISTKEY (product_category_name);
 -- Create the product_category_name_translation COPY JOB
 COPY public.product_category_name_translation
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/product_category_name_translation.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/product_category_name_translation.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -165,9 +165,9 @@ DISTSTYLE KEY
 DISTKEY (product_id);
 -- Create the products COPY JOB
 COPY public.products
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/products.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/products.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -188,9 +188,9 @@ DISTSTYLE KEY
 DISTKEY (seller_id);
 -- Create the sellers COPY JOB
 COPY public.sellers
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/sellers.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/sellers.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars
@@ -217,9 +217,9 @@ DISTSTYLE KEY
 DISTKEY (order_id);
 -- Create the order_items COPY JOB
 COPY public.order_items
-FROM 's3://dbt-redshift-ssm-demo-dev-bucket-dd5d9e78/data/order_items.csv'
-region 'eu-central-1'
-IAM_ROLE 'arn:aws:iam::233999162391:role/DBT-Redshift-SSM-Demo-Role'
+FROM 's3://BUCKET_NAME/data/order_items.csv'
+region 'REGION'
+IAM_ROLE 'arn:aws:iam::AWS_ACCOUNT_ID:role/DBT-Redshift-SSM-Demo-Role'
 delimiter ','
 ignoreheader 1
 acceptinvchars

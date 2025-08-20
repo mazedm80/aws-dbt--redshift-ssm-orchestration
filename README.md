@@ -120,6 +120,7 @@ This project includes the following components:
 
 2. Update Terraform variables
    - Edit the `terraform/environments/dev.tfvars` file to configure your environment settings.
+   - Set REGION, BUCKET_NAME, and AWS_ACCOUNT_ID in the `redshift_setup.sql` file and save it.
 
 3. Deploy the infrastructure
    ```bash
@@ -128,15 +129,13 @@ This project includes the following components:
    terraform apply -var-file=environments/dev.tfvars
    ```
 
-4. Load the data into S3
+4. Setup redshift auto copy jobs
+Open the redshift query editor v2 and run all the sql code from the `redshift_setup.sql` file to create the copy jobs.
+
+5. Load the data and dbt files into S3
    ```bash
    ./s3_copy_data.sh
-   ```
-
-5. Run dbt transformations
-   ```bash
-   cd dbt_redshift_ssm_demo
-   dbt run
+   ./s3_copy_dbt_project.sh
    ```
 
 6. Run SSM Automation
